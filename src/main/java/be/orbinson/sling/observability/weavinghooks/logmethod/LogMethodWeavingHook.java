@@ -10,12 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class LogMethodWeavingHook implements WeavingHook {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-
-    private final PrintWriter printWriter = new PrintWriter(System.out);
 
     private final String className;
     private final String methodName;
@@ -43,12 +42,15 @@ public class LogMethodWeavingHook implements WeavingHook {
         final ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         ClassVisitor logMethodClassVisitor;
         if (enableTraceVisitor) {
-            final TraceClassVisitor tcv = new TraceClassVisitor(cw, printWriter);
+            StringWriter out = new StringWriter();
+            final TraceClassVisitor tcv = new TraceClassVisitor(cw, new PrintWriter(out));
             logMethodClassVisitor = new LogMethodClassVisitor(tcv, className, methodName, logLevel);
+            cr.accept(logMethodClassVisitor, 0);
+            log.debug("Resulting class bytecode: {}", out);
         } else {
             logMethodClassVisitor = new LogMethodClassVisitor(cw, className, methodName, logLevel);
+            cr.accept(logMethodClassVisitor, 0);
         }
-        cr.accept(logMethodClassVisitor, 0);
         wovenClass.setBytes(cw.toByteArray());
     }
 
@@ -58,5 +60,6 @@ public class LogMethodWeavingHook implements WeavingHook {
     private void addDynamicImports(WovenClass wovenClass) {
         wovenClass.getDynamicImports().add("org.slf4j");
     }
+
 
 }
