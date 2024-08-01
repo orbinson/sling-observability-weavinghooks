@@ -15,8 +15,7 @@ Example, search for your classname, method name and amount of parameters you wan
 ```json
 {
   "className": "my.package.MyClass",
-  "methodName": "doGet",
-  "amountOfParameters": 2
+  "methodName": "doGet"
 }
 ```
 
