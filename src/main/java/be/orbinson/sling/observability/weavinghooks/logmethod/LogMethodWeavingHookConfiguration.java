@@ -36,14 +36,14 @@ public class LogMethodWeavingHookConfiguration {
     private String className;
     private String methodName;
     private String logLevel;
-    private boolean enableTraceVisitor;
+    private boolean showGeneratedBytecode;
 
     @Activate
     void activate(Config config) {
         this.className = config.className();
         this.methodName = config.methodName();
         this.logLevel = config.logLevel();
-        this.enableTraceVisitor = config.showGeneratedBytecode();
+        this.showGeneratedBytecode = config.showGeneratedBytecode();
     }
 
     public String getClassName() {
@@ -58,7 +58,7 @@ public class LogMethodWeavingHookConfiguration {
         return logLevel;
     }
 
-    public boolean isEnableTraceVisitor() {
-        return enableTraceVisitor;
+    public boolean isShowGeneratedBytecode() {
+        return showGeneratedBytecode;
     }
 }

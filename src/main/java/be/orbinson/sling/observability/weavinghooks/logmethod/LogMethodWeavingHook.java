@@ -19,13 +19,13 @@ public class LogMethodWeavingHook implements WeavingHook {
     private final String className;
     private final String methodName;
     private final String logLevel;
-    private final boolean enableTraceVisitor;
+    private final boolean showGeneratedBytecode;
 
     public LogMethodWeavingHook(LogMethodWeavingHookConfiguration config) {
         this.className = config.getClassName();
         this.methodName = config.getMethodName();
         this.logLevel = config.getLogLevel();
-        this.enableTraceVisitor = config.isEnableTraceVisitor();
+        this.showGeneratedBytecode = config.isShowGeneratedBytecode();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class LogMethodWeavingHook implements WeavingHook {
         final ClassReader cr = new ClassReader(wovenClass.getBytes());
         final ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
         ClassVisitor logMethodClassVisitor;
-        if (enableTraceVisitor) {
+        if (showGeneratedBytecode) {
             StringWriter out = new StringWriter();
             final TraceClassVisitor tcv = new TraceClassVisitor(cw, new PrintWriter(out));
             logMethodClassVisitor = new LogMethodClassVisitor(tcv, className, methodName, logLevel);

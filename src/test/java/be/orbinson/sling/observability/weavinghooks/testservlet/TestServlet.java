@@ -1,35 +1,31 @@
-package be.orbinson.sling.observability.weavinghooks.servlet;
+package be.orbinson.sling.observability.weavinghooks.testservlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardContextSelect;
 import org.osgi.service.http.whiteboard.propertytypes.HttpWhiteboardServletPattern;
 
-import javax.servlet.*;
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet used in Integration test to validate that logs are appended
+ * Servlet used in {@link be.orbinson.sling.observability.weavinghooks.it.WeavingHookIT} Integration test to validate that logs are appended
  */
 @HttpWhiteboardServletPattern("/test")
 @HttpWhiteboardContextSelect("(osgi.http.whiteboard.context.name=org.osgi.service.http)")
 @Component(service = Servlet.class)
-public class TestServlet implements Servlet {
+public class TestServlet extends HttpServlet {
 
 
     @Override
-    public void init(ServletConfig servletConfig) throws ServletException {
-
-    }
-
-    @Override
-    public ServletConfig getServletConfig() {
-        return null;
-    }
-
-    @Override
-    public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
         methodWithOneParameter("parameterOne");
-        methodWithTwoParameters("parameterOne","parameterTwo");
+        methodWithTwoParameters("parameterOne", "parameterTwo");
+        resp.getWriter().print("OK");
+        resp.getWriter().flush();
     }
 
     private void methodWithOneParameter(String parameterOne) {
@@ -40,13 +36,4 @@ public class TestServlet implements Servlet {
         // do nothing
     }
 
-    @Override
-    public String getServletInfo() {
-        return "";
-    }
-
-    @Override
-    public void destroy() {
-
-    }
 }

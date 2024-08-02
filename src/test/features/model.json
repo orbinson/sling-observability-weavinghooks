@@ -81,6 +81,7 @@
       "id": "${project.groupId}:${project.artifactId}:${project.version}",
       "start-order": 1
     },
+    // Test OSGI servlet. Feature model only use a new version if the project succesfully compiled (so -DskipTests might be required)
     {
       "id": "${project.groupId}:${project.artifactId}:jar:tests:${project.version}",
       "start-order": "5"
@@ -91,17 +92,30 @@
       "org.apache.sling.commons.log.level": "info",
       "org.apache.sling.commons.log.file": "logs/error.log",
       "org.apache.sling.commons.log.names": [
-        "org.apache",
-        "be.orbinson"
+        "org.apache"
+      ]
+    },
+    "org.apache.sling.commons.log.LogManager.factory.config~weavinghook.log": {
+      "org.apache.sling.commons.log.level": "debug",
+      "org.apache.sling.commons.log.file": "logs/weavinghook.log",
+      "org.apache.sling.commons.log.names": [
+        "be.orbinson.sling.observability.weavinghooks"
+      ]
+    },
+    "org.apache.sling.commons.log.LogManager.factory.config~test.log": {
+      "org.apache.sling.commons.log.level": "info",
+      "org.apache.sling.commons.log.file": "logs/test.log",
+      "org.apache.sling.commons.log.names": [
+        "be.orbinson.sling.observability.weavinghooks.testservlet"
       ]
     },
     "be.orbinson.sling.observability.weavinghooks.logmethod.LogMethodWeavingHookConfiguration~TestServlet-methodOne": {
-      "className": "be.orbinson.sling.observability.weavinghooks.servlet.TestServlet",
+      "className": "be.orbinson.sling.observability.weavinghooks.testservlet.TestServlet",
       "methodName": "methodWithOneParameter",
       "showGeneratedBytecode": true
     },
     "be.orbinson.sling.observability.weavinghooks.logmethod.LogMethodWeavingHookConfiguration~TestServlet-methodTwo": {
-      "className": "be.orbinson.sling.observability.weavinghooks.servlet.TestServlet",
+      "className": "be.orbinson.sling.observability.weavinghooks.testservlet.TestServlet",
       "methodName": "methodWithTwoParameters",
       "showGeneratedBytecode": true
     }
