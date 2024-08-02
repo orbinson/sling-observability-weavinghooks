@@ -1,4 +1,4 @@
-package be.orbinson.sling.observability.weavinghooks.test;
+package be.orbinson.sling.observability.weavinghooks.util;
 
 import org.slf4j.LoggerFactory;
 
