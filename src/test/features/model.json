@@ -67,7 +67,7 @@
       "id": "org.apache.sling:org.apache.sling.commons.log.webconsole:1.0.0",
       "start-order": "5"
     },
-    // Servlet API + Sample for IT tests
+    // Servlet API for IT tests
     {
       "id": "org.apache.felix:org.apache.felix.http.servlet-api:1.1.2",
       "start-order": "5"

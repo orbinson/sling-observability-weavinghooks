@@ -133,6 +133,21 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!-- We have to install the main and test jar to local repo so that the feature plugin can use it in the feature model -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <version>3.1.2</version>
+                        <executions>
+                            <execution>
+                                <id>install-to-local-repo</id>
+                                <goals>
+                                    <goal>install</goal>
+                                </goals>
+                                <phase>pre-integration-test</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.sling</groupId>
                         <artifactId>slingfeature-maven-plugin</artifactId>
@@ -157,6 +172,7 @@
                             <launches>
                                 <launch>
                                     <id>model</id>
+                                    <skip>${skipTests}</skip>
                                     <feature>
                                         <groupId>${project.groupId}</groupId>
                                         <artifactId>${project.artifactId}</artifactId>
@@ -170,9 +186,9 @@
                                             <org.osgi.service.http.port>${http.port}</org.osgi.service.http.port>
                                         </frameworkProperties>
                                         <!-- Uncomment to enable debugging of IT tests -->
-<!--                                        <vmOptions>-->
-<!--                                            <value>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000</value>-->
-<!--                                        </vmOptions>-->
+                                        <!--                                        <vmOptions>-->
+                                        <!--                                            <value>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5000</value>-->
+                                        <!--                                        </vmOptions>-->
                                     </launcherArguments>
                                     <startTimeoutSeconds>180</startTimeoutSeconds>
                                 </launch>
@@ -280,11 +296,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.sling</groupId>
-            <artifactId>feature-launcher-maven-plugin</artifactId>
-            <version>0.1.6</version>
-        </dependency>
 
     </dependencies>
 </project>
