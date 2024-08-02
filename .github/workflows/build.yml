@@ -27,3 +27,6 @@ jobs:
 
       - name: Build
         run: mvn --batch-mode --update-snapshots install
+
+      - name: Integration Tests
+        run: mvn install -Pit
