@@ -19,7 +19,7 @@ Example, search for your classname, method name and amount of parameters you wan
 }
 ```
 
-To make the weaving hook work, either a framework restart of an entire java process restart is required.
+To make the weaving hook work, a refresh of the target bundle is required.
 
 ## Future
 
