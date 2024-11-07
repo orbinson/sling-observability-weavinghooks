@@ -10,7 +10,7 @@ When all else fails, and you have no logs available because there are no log sta
 
 Install the bundle in start level 1 and add an OSGi config for every method log you would like to add.
 
-Example, search for your classname, method name and amount of parameters you want to log and add an OSGi config `be.orbinson.sling.observability.weavinghooks.logmethod.LogMethodWeavingHookConfiguration~MyClass-doGet.cfg.json`
+Example, search for your classname and method name you want to log and add an OSGi config `be.orbinson.sling.observability.weavinghooks.logmethod.LogMethodWeavingHookConfiguration~MyClass-doGet.cfg.json`
 
 ```json
 {
